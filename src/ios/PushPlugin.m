@@ -34,6 +34,34 @@
 @synthesize notificationCallbackId;
 @synthesize callback;
 
+- (void)areNotificationsEnabled:(CDVInvokedUrlCommand*)command;
+{
+  self.callbackId = command.callbackId;
+  BOOL registered = false;
+  // http://stackoverflow.com/questions/31560409/cordova-pushplugin-detect-if-pushs-are-enabled
+  if ([[UIApplication sharedApplication]  respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+      if ([[UIApplication sharedApplication]  isRegisteredForRemoteNotifications]){
+          // NSLog(@"iOS 8, notifications enabled");
+          registered = true;
+      } else {
+          // NSLog(@"iOS 8, notifications not enabled");
+      }
+  } else {
+      UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+      if (types & UIRemoteNotificationTypeAlert)
+      {
+          // NSLog(@"Notifications Enabled");
+          registered = true;
+      }
+      else
+      {
+         // NSLog(@"Notifications not enabled");
+      }
+  }
+
+  CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:registered];
+  [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
+}
 
 - (void)unregister:(CDVInvokedUrlCommand*)command;
 {
