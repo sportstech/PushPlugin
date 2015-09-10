@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSDictionary *notificationMessage;
 @property BOOL                          isInline;
 
+- (void)openSettings:(CDVInvokedUrlCommand*)command;
 - (void)areNotificationsEnabled:(CDVInvokedUrlCommand*)command;
 
 - (void)register:(CDVInvokedUrlCommand*)command;

@@ -1,6 +1,24 @@
 var PushNotification = function() {
 };
 
+// Call this to open the settings for the app
+PushNotification.prototype.openSettings = function(successCallback, errorCallback, options) {
+    if (successCallback == null) { successCallback = function() {}}
+    if (errorCallback == null) { errorCallback = function() {}}
+
+    if (typeof errorCallback != "function")  {
+        console.log("PushNotification.register failure: failure parameter not a function");
+        return
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("PushNotification.register failure: success callback parameter must be a function");
+        return
+    }
+
+    cordova.exec(successCallback, errorCallback, "PushPlugin", "openSettings", [options]);
+};
+
 // Call this to see if notifications are enabled
 PushNotification.prototype.areNotificationsEnabled = function(successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function() {}}

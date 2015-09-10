@@ -34,6 +34,15 @@
 @synthesize notificationCallbackId;
 @synthesize callback;
 
+- (void)openSettings:(CDVInvokedUrlCommand*)command;
+{
+    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    if (canOpenSettings) {
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
 - (void)areNotificationsEnabled:(CDVInvokedUrlCommand*)command;
 {
   self.callbackId = command.callbackId;
