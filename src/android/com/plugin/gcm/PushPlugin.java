@@ -103,7 +103,7 @@ public class PushPlugin extends CordovaPlugin {
       
 			result = true;
 			callbackContext.success();
-    else {
+    } else {
 			result = false;
 			Log.e(TAG, "Invalid action : " + action);
 			callbackContext.error("Invalid action : " + action);
