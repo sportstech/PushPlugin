@@ -25,6 +25,7 @@ public class PushPlugin extends CordovaPlugin {
 	public static final String REGISTER = "register";
 	public static final String UNREGISTER = "unregister";
 	public static final String EXIT = "exit";
+  public static final String OPEN_SETTINGS = "openSettings";
 
 	private static CordovaWebView gWebView;
 	private static String gECB;
@@ -84,7 +85,25 @@ public class PushPlugin extends CordovaPlugin {
 			Log.v(TAG, "UNREGISTER");
 			result = true;
 			callbackContext.success();
-		} else {
+		} else if (OPEN_SETTINGS.equals(action)) {
+      
+      Intent intent = new Intent();
+      final int apiLevel = Build.VERSION.SDK_INT;
+      if (apiLevel >= 9) { // above 2.3
+          intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+          Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+          intent.setData(uri);
+      } else { // below 2.3
+          final String appPkgName = (apiLevel == 8 ? "pkg" : "com.android.settings.ApplicationPkgName");
+          intent.setAction(Intent.ACTION_VIEW);
+          intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+          intent.putExtra(appPkgName, getApplicationContext().getPackageName());
+      }
+      getApplicationContext().startActivity(intent);
+      
+			result = true;
+			callbackContext.success();
+    else {
 			result = false;
 			Log.e(TAG, "Invalid action : " + action);
 			callbackContext.error("Invalid action : " + action);
