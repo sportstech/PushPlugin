@@ -2,6 +2,9 @@ package com.plugin.gcm;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.Build;
+import android.content.Settings;
 import android.os.Bundle;
 import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
@@ -88,6 +91,7 @@ public class PushPlugin extends CordovaPlugin {
 		} else if (OPEN_SETTINGS.equals(action)) {
       
       Intent intent = new Intent();
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       final int apiLevel = Build.VERSION.SDK_INT;
       if (apiLevel >= 9) { // above 2.3
           intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
