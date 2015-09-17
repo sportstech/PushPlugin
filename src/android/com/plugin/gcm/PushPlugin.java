@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.Settings;
-import android.net.Uri
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
